@@ -1,13 +1,13 @@
 {
-	"poolHost": "your.pool.host",
+	"poolHost": "pool.bitlitas.lt",
 
 	"coin": "bitlitas",
 	"symbol": "LTL",
 	"coinUnits": 1000000000000,
 	"coinDecimalPlaces": 4,
 	"coinDifficultyTarget": 120,
-	"blockchainExplorer": "http://blockexplorer.arqma.com/block/{id}",
-	"transactionExplorer": "http://blockexplorer.arqma.com/tx/{id}",
+	"blockchainExplorer": "https://explorer.bitlitas.lt/block/{id}",
+	"transactionExplorer": "https://explorer.bitlitas.lt/tx/{id}",
 	"daemonType": "default",
 	"cnAlgorithm": "randomx",
 	"cnVariant": 0,
@@ -288,13 +288,13 @@
 				"maximumPeriod": 604800
 			},
 			"price": {
-				"enabled": true,
+				"enabled": false,
 				"updateInterval": 1800,
 				"stepInterval": 10800,
 				"maximumPeriod": 604800
 			},
 			"profit": {
-				"enabled": true,
+				"enabled": false,
 				"updateInterval": 1800,
 				"stepInterval": 10800,
 				"maximumPeriod": 604800
