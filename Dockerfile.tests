@@ -1,0 +1,40 @@
+# -----------------------------------------------------------
+#  [*] Pool — regression test image
+#
+#  The production image, built first by runTests.sh under
+#  the bitlitas-pool-check tag, plus what the suite needs
+#  around the pool — nothing inside the pool changes. Redis
+#  comes from Debian bookworm, the base the image runs on;
+#  each test file starts a redis-server of its own. The real
+#  Bitlitas v0.18.3.1 daemon and wallet RPC come from the
+#  stack's own bitlitasd image, for the suite that mines
+#  against them on a regtest chain; both link nothing but
+#  glibc, which bookworm's is newer than. The suite needs no
+#  packages of its own: it runs on Node's built-in test
+#  runner and takes the hashing modules and the Redis client
+#  from the pool's own node_modules. The build context is
+#  tests/: the suite is kept out of the production image by
+#  .dockerignore and copied in here.
+#
+#  Used by:
+#    - runTests.sh (this folder)
+# -----------------------------------------------------------
+ARG BASE=bitlitas-pool-check
+FROM ${BASE}
+
+
+# Redis, the pool's database
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends redis-server \
+  && rm -rf /var/lib/apt/lists/*
+
+
+# bitlitasd and bitlitas-wallet-rpc v0.18.3.1
+COPY --from=vuknf/bitlitasd-v2:20261108 /usr/local/bin/bitlitasd /usr/local/bin/bitlitas-wallet-rpc /usr/local/bin/
+
+
+# The suite
+COPY . /pool/tests/
+
+
+ENTRYPOINT ["sh", "/pool/tests/container/run.sh"]

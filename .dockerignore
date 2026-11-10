@@ -3,3 +3,6 @@ node_modules
 logs
 config.json
 *.pem
+tests
+Dockerfile.tests
+runTests.sh
